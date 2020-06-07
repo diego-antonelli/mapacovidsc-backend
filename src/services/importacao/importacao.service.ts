@@ -76,13 +76,12 @@ function normalizarDados(dados: CSV[]): Dado[] {
 }
 
 export async function importarDados(): Promise<any> {
-    // await download();
+    await download();
     const dadosNormalizados = normalizarDados(await readCsvFile(filePath));
     if (!dadosNormalizados) {
         throw new HTTP400Error("Dados do SES/SC não estão íntegros!");
     }
     const municipios = Array.from(new Set(dadosNormalizados.map((d) => d.codigoIbge)));
-    console.log(municipios);
     const dados: ResumoMunicipio[] = municipios.map((codigoIbge) => {
         const dadosMunicipio = dadosNormalizados.filter((d) => d.codigoIbge === codigoIbge);
         return {
