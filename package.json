@@ -39,7 +39,7 @@
     "snyk": "^1.334.0",
     "swagger-ui-express": "^4.1.4",
     "tsc-watch": "^4.2.3",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   },
   "jest": {
     "verbose": true,
