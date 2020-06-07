@@ -1,0 +1,53 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Mapa COVID SC APIs"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "schemes": ["http"],
+    "produces": ["application/json"],
+    "paths": {
+        "/importar": {
+            "get": {
+                "tags": ["Importar"],
+                "summary": "Importa os dados abertos da Secretaria de Estado da Saúde (SES)/SC",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Database error"
+                    }
+                }
+            }
+        },
+        "/resultados": {
+            "get": {
+                "tags": ["Resultados"],
+                "summary": "Exibe os resultados da importação de dados da Secretaria de Estado da Saúde (SES)/SC",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Database error"
+                    }
+                }
+            }
+        }
+    }
+}
