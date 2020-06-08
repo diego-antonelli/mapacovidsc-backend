@@ -4,7 +4,6 @@
         "version": "1.0.0",
         "title": "Mapa COVID SC APIs"
     },
-    "host": "localhost:3000",
     "basePath": "/api/v1",
     "schemes": ["http"],
     "produces": ["application/json"],
