@@ -4,7 +4,7 @@ import { Resumo } from "../../models/resultado";
 import { generateSort } from "../../utils/databaseHelpers";
 
 export async function listarResultados() {
-    const resultados = (await Database.findMany(
+    const resultados = (await Database.findLast(
         config.collections.resumo,
         {},
         generateSort<Resumo>("publicacao", true),
