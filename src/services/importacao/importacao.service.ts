@@ -46,10 +46,16 @@ function normalizarDados(dados: CSV[]): Dado[] {
     return dados.map(
         (dado) =>
             ({
-                publicacao: new Date(dado.data_publicacao),
+                publicacao:
+                    dado.data_publicacao && Date.parse(dado.data_publicacao) > 0
+                        ? new Date(dado.data_publicacao)
+                        : null,
                 recuperado: dado.recuperados === "SIM",
-                inicioSintomas: new Date(dado.data_inicio_sintomas),
-                coleta: dado.data_coleta,
+                inicioSintomas:
+                    dado.data_inicio_sintomas && Date.parse(dado.data_inicio_sintomas) > 0
+                        ? new Date(dado.data_inicio_sintomas)
+                        : null,
+                coleta: dado.data_coleta && Date.parse(dado.data_coleta) > 0 ? new Date(dado.data_coleta) : null,
                 sintomas: dado.sintomas,
                 comorbidades: dado.comorbidades,
                 internado: dado.internacao === "INTERNADO",
@@ -57,9 +63,10 @@ function normalizarDados(dados: CSV[]): Dado[] {
                 sexo: dado.sexo,
                 municipio: dado.municipio,
                 obito: dado.obito === "SIM",
-                dataObito: new Date(dado.data_obito),
+                dataObito: dado.data_obito && Date.parse(dado.data_obito) ? new Date(dado.data_obito) : null,
                 idade: Number(dado.idade),
-                dataResultado: new Date(dado.data_resultado),
+                dataResultado:
+                    dado.data_resultado && Date.parse(dado.data_resultado) > 0 ? new Date(dado.data_resultado) : null,
                 codigoIbge: isNaN(Number(dado.codigo_ibge_municipio)) ? 9999999 : Number(dado.codigo_ibge_municipio),
                 latitude: Number(dado.latitude),
                 longitude: Number(dado.longitude),
@@ -73,11 +80,21 @@ function normalizarDados(dados: CSV[]): Dado[] {
                 nomeLaboratorio: dado.nom_laboratorio === "NULL" ? null : dado.nom_laboratorio,
                 testeRapido: dado.fez_teste_rapido === "SIM",
                 pcr: dado.fez_pcr === "SIM",
-                dataInternacao: dado.data_internacao ? new Date(dado.data_internacao) : null,
-                dataEntradaUti: dado.data_entrada_uti ? new Date(dado.data_entrada_uti) : null,
+                dataInternacao:
+                    dado.data_internacao && Date.parse(dado.data_internacao) > 0
+                        ? new Date(dado.data_internacao)
+                        : null,
+                dataEntradaUti:
+                    dado.data_entrada_uti && Date.parse(dado.data_entrada_uti) > 0
+                        ? new Date(dado.data_entrada_uti)
+                        : null,
                 regionalSaude: dado.regional_saude,
-                dataEvolucaoCaso: dado.data_evolucao_caso ? new Date(dado.data_evolucao_caso) : null,
-                dataSaidaUti: dado.data_saida_uti ? new Date(dado.data_saida_uti) : null,
+                dataEvolucaoCaso:
+                    dado.data_evolucao_caso && Date.parse(dado.data_evolucao_caso) > 0
+                        ? new Date(dado.data_evolucao_caso)
+                        : null,
+                dataSaidaUti:
+                    dado.data_saida_uti && Date.parse(dado.data_saida_uti) > 0 ? new Date(dado.data_saida_uti) : null,
                 bairro: dado.bairro,
             } as Dado),
     );

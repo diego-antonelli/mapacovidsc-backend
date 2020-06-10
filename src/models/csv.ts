@@ -1,8 +1,8 @@
 export interface CSV {
-    data_publicacao: Date;
+    data_publicacao: string;
     recuperados: string; //SIM ou NAO
-    data_inicio_sintomas: Date;
-    data_coleta: Date;
+    data_inicio_sintomas: string;
+    data_coleta: string;
     sintomas: string;
     comorbidades: string; //Doenças recorrentes (Hipertensao, etc)
     internacao: string; //INTERNADO ou NAO INTERNADO
@@ -10,11 +10,11 @@ export interface CSV {
     sexo: string; //MASCULINO ou FEMININO
     municipio: string;
     obito: string; // SIM ou NAO
-    data_obito: Date; //DATA OU NULL
+    data_obito: string; //DATA OU NULL
     idade: number;
     regional: string; //MACRO
     raca: string;
-    data_resultado: Date;
+    data_resultado: string;
     codigo_ibge_municipio: number; //NUMERO ou NULL caso seja fora do estado
     latitude: number; //OU NULL
     longitude: number; //OU NULL
@@ -31,10 +31,10 @@ export interface CSV {
     nom_laboratorio: string;
     fez_teste_rapido: string;
     fez_pcr: string;
-    data_internacao: Date;
-    data_entrada_uti: Date;
+    data_internacao: string;
+    data_entrada_uti: string;
     regional_saude: string;
-    data_evolucao_caso: Date;
-    data_saida_uti: Date;
+    data_evolucao_caso: string;
+    data_saida_uti: string;
     bairro: string;
 }
