@@ -45,4 +45,12 @@ export interface Dado {
     origemLacen: boolean;
     origemLaboratorioPrivado: boolean;
     nomeLaboratorio: string;
+    testeRapido: boolean;
+    pcr: boolean;
+    dataInternacao: Date;
+    dataEntradaUti: Date;
+    regionalSaude: string;
+    dataEvolucaoCaso: Date;
+    dataSaidaUti: Date;
+    bairro: string;
 }

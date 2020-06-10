@@ -32,7 +32,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.importarDados = void 0;
-const csv_parser_1 = __importDefault(require("csv-parser"));
+const csv_reader_1 = __importDefault(require("csv-reader"));
 const fs_1 = require("fs");
 const util_1 = require("util");
 const stream_1 = require("stream");
@@ -66,8 +66,8 @@ function readCsvFile(path) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
             const results = [];
-            fs_1.createReadStream(path)
-                .pipe(csv_parser_1.default({ separator: ";", mapHeaders: ({ header, index }) => header.trim().toLowerCase() }))
+            fs_1.createReadStream(path, "utf8")
+                .pipe(csv_reader_1.default({ delimiter: ";", asObject: true, parseNumbers: true, trim: true }))
                 .on("data", (data) => results.push(data))
                 .on("end", () => resolve(results))
                 .on("error", (e) => reject(e));
@@ -101,6 +101,14 @@ function normalizarDados(dados) {
         origemLacen: dado.origem_lacen === "SIM",
         origemLaboratorioPrivado: dado.origem_laboratorio_privado === "SIM",
         nomeLaboratorio: dado.nom_laboratorio === "NULL" ? null : dado.nom_laboratorio,
+        testeRapido: dado.fez_teste_rapido === "SIM",
+        pcr: dado.fez_pcr === "SIM",
+        dataInternacao: dado.data_internacao ? new Date(dado.data_internacao) : null,
+        dataEntradaUti: dado.data_entrada_uti ? new Date(dado.data_entrada_uti) : null,
+        regionalSaude: dado.regional_saude,
+        dataEvolucaoCaso: dado.data_evolucao_caso ? new Date(dado.data_evolucao_caso) : null,
+        dataSaidaUti: dado.data_saida_uti ? new Date(dado.data_saida_uti) : null,
+        bairro: dado.bairro,
     }));
 }
 function importarDados() {

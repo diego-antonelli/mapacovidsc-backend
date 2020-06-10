@@ -1,4 +1,4 @@
-import csv from "csv-parser";
+import csv from "csv-reader";
 import { createReadStream, createWriteStream } from "fs";
 import { CSV } from "../../models/csv";
 import { promisify } from "util";
@@ -34,8 +34,8 @@ async function download() {
 async function readCsvFile(path: string): Promise<CSV[]> {
     return new Promise((resolve, reject) => {
         const results: any[] = [];
-        createReadStream(path)
-            .pipe(csv({ separator: ";", mapHeaders: ({ header, index }) => header.trim().toLowerCase() }))
+        createReadStream(path, "utf8")
+            .pipe(csv({ delimiter: ";", asObject: true, parseNumbers: true, trim: true }))
             .on("data", (data) => results.push(data))
             .on("end", () => resolve(results))
             .on("error", (e) => reject(e));
@@ -71,6 +71,14 @@ function normalizarDados(dados: CSV[]): Dado[] {
                 origemLacen: dado.origem_lacen === "SIM",
                 origemLaboratorioPrivado: dado.origem_laboratorio_privado === "SIM",
                 nomeLaboratorio: dado.nom_laboratorio === "NULL" ? null : dado.nom_laboratorio,
+                testeRapido: dado.fez_teste_rapido === "SIM",
+                pcr: dado.fez_pcr === "SIM",
+                dataInternacao: dado.data_internacao ? new Date(dado.data_internacao) : null,
+                dataEntradaUti: dado.data_entrada_uti ? new Date(dado.data_entrada_uti) : null,
+                regionalSaude: dado.regional_saude,
+                dataEvolucaoCaso: dado.data_evolucao_caso ? new Date(dado.data_evolucao_caso) : null,
+                dataSaidaUti: dado.data_saida_uti ? new Date(dado.data_saida_uti) : null,
+                bairro: dado.bairro,
             } as Dado),
     );
 }

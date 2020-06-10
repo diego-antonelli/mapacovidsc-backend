@@ -29,4 +29,12 @@ export interface CSV {
     origem_lacen: string; //SIM OU NAO
     origem_laboratorio_privado: string; //SIM OU NAO
     nom_laboratorio: string;
+    fez_teste_rapido: string;
+    fez_pcr: string;
+    data_internacao: Date;
+    data_entrada_uti: Date;
+    regional_saude: string;
+    data_evolucao_caso: Date;
+    data_saida_uti: Date;
+    bairro: string;
 }
