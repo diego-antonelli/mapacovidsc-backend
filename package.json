@@ -8,7 +8,7 @@
     "format": "npx prettier -c --write \"./src/**/*.[j|t]s\"",
     "lint": "npx eslint \"./src/**/*.[j|t]s\"",
     "lint:fix": "npm run lint -- --fix",
-    "start": "node ./dist/server.js",
+    "start": "node --max_old_space_size=2560 ./dist/server.js",
     "prestart:prod": "npx tsc",
     "start:prod": "npx pm2 start pm2.yaml",
     "predev": "npm run format && npm run lint",

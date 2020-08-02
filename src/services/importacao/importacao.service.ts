@@ -101,7 +101,7 @@ function normalizarDados(dados: CSV[]): Dado[] {
 }
 
 export async function importarDados(): Promise<any> {
-    // await download();
+    await download();
     const dadosNormalizados = normalizarDados(await readCsvFile(filePath));
     if (!dadosNormalizados) {
         throw new HTTP400Error("Dados do SES/SC não estão íntegros!");
