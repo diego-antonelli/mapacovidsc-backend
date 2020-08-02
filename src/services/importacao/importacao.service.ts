@@ -117,7 +117,7 @@ export async function importarDados(): Promise<any> {
             internados: dadosMunicipio.filter((d) => d.internado).length,
             internadosUti: dadosMunicipio.filter((d) => d.internadoUti).length,
             obitos: dadosMunicipio.filter((d) => d.obito).length,
-            dados: dadosMunicipio,
+            dados: dadosMunicipio
         } as ResumoMunicipio;
     });
     const resumo: Resumo = {
@@ -126,14 +126,16 @@ export async function importarDados(): Promise<any> {
         internadosUti: dados.reduce((soma, dado) => soma + dado.internadosUti, 0),
         recuperados: dados.reduce((soma, dado) => soma + dado.recuperados, 0),
         obitos: dados.reduce((soma, dado) => soma + dado.obitos, 0),
-        casos: dados.reduce((soma, dado) => soma + dado.casos, 0),
-        dados,
+        casos: dados.reduce((soma, dado) => soma + dado.casos, 0)
     };
     const dadosBanco = await Database.findOne(config.collections.resumo, { publicacao: resumo.publicacao });
     if (!dadosBanco) {
         const retorno = await Database.save(config.collections.resumo, resumo);
         if (!retorno.insertedId) {
             throw new HTTP400Error();
+        }
+        for(const dado of dados){
+            await Database.save(config.collections.municipios, {publicacao: dadosNormalizados[0].publicacao, ...dado});
         }
         return resumo;
     }

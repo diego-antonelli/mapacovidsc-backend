@@ -5,10 +5,11 @@ export interface Resumo {
     internados: number;
     internadosUti: number;
     obitos: number;
-    dados: ResumoMunicipio[];
+    dados?: ResumoMunicipio[];
 }
 
 export interface ResumoMunicipio {
+    publicacao?: Date;
     nome: string;
     codigoIbge: number;
     casos: number;

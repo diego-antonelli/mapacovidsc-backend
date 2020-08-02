@@ -44,6 +44,11 @@ export class Database {
         return await Database.db.collection(collection).findOne(filter);
     };
 
+    public static findAll = async (collection: string, filter: any, sort?: any) => {
+        if (!Database.client.isConnected()) throw new MongoError("Mongo is disconnected");
+        return await Database.db.collection(collection).find(filter).sort(sort).toArray();
+    };
+
     public static findLast = async (collection: string, filter: any, sort?: any) => {
         if (!Database.client.isConnected()) throw new MongoError("Mongo is disconnected");
         return await Database.db.collection(collection).find(filter).sort(sort).limit(1).toArray();
