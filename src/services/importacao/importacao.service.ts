@@ -101,7 +101,7 @@ function normalizarDados(dados: CSV[]): Dado[] {
 }
 
 export async function importarDados(): Promise<any> {
-    await download();
+    // await download();
     const dadosNormalizados = normalizarDados(await readCsvFile(filePath));
     if (!dadosNormalizados) {
         throw new HTTP400Error("Dados do SES/SC não estão íntegros!");
@@ -117,7 +117,7 @@ export async function importarDados(): Promise<any> {
             internados: dadosMunicipio.filter((d) => d.internado).length,
             internadosUti: dadosMunicipio.filter((d) => d.internadoUti).length,
             obitos: dadosMunicipio.filter((d) => d.obito).length,
-            dados: dadosMunicipio
+            dados: dadosMunicipio,
         } as ResumoMunicipio;
     });
     const resumo: Resumo = {
@@ -126,18 +126,25 @@ export async function importarDados(): Promise<any> {
         internadosUti: dados.reduce((soma, dado) => soma + dado.internadosUti, 0),
         recuperados: dados.reduce((soma, dado) => soma + dado.recuperados, 0),
         obitos: dados.reduce((soma, dado) => soma + dado.obitos, 0),
-        casos: dados.reduce((soma, dado) => soma + dado.casos, 0)
+        casos: dados.reduce((soma, dado) => soma + dado.casos, 0),
     };
     const dadosBanco = await Database.findOne(config.collections.resumo, { publicacao: resumo.publicacao });
     if (!dadosBanco) {
+        console.log("Salvando no banco de dados...");
         const retorno = await Database.save(config.collections.resumo, resumo);
         if (!retorno.insertedId) {
             throw new HTTP400Error();
         }
-        for(const dado of dados){
-            await Database.save(config.collections.municipios, {publicacao: dadosNormalizados[0].publicacao, ...dado});
+        for (const dado of dados) {
+            console.log(`Salvando ${dado.nome}`);
+            await Database.save(config.collections.municipios, {
+                resumo: retorno.insertedId,
+                ...dado,
+            });
         }
+        console.log("Finalizado!");
         return resumo;
     }
+    console.log("Não salvo no banco de dados!");
     return {};
 }

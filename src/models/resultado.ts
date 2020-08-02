@@ -1,4 +1,5 @@
 export interface Resumo {
+    _id?: string;
     publicacao: Date;
     casos: number;
     recuperados: number;
@@ -9,7 +10,7 @@ export interface Resumo {
 }
 
 export interface ResumoMunicipio {
-    publicacao?: Date;
+    resumo?: string;
     nome: string;
     codigoIbge: number;
     casos: number;
@@ -22,6 +23,7 @@ export interface ResumoMunicipio {
 
 export interface Dado {
     publicacao: Date;
+    resumo: string;
     recuperado: boolean;
     inicioSintomas: Date;
     coleta: Date;

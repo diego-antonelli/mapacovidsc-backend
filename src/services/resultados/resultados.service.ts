@@ -1,6 +1,6 @@
 import { Database } from "../../database";
 import * as config from "../../config/database.json";
-import {Resumo, ResumoMunicipio} from "../../models/resultado";
+import { Resumo, ResumoMunicipio } from "../../models/resultado";
 import { generateSort } from "../../utils/databaseHelpers";
 
 export async function listarResultados() {
@@ -9,11 +9,15 @@ export async function listarResultados() {
         {},
         generateSort<Resumo>("publicacao", true),
     )) as Resumo[];
-    if (resultados && resultados.length > 0){
+    if (resultados && resultados.length > 0) {
         const ultimoResultado = resultados.shift();
-        ultimoResultado!.dados = (await Database.findAll(config.collections.municipios, {
-            publicacao: ultimoResultado!.publicacao
-        },generateSort<ResumoMunicipio>("nome", true))) as ResumoMunicipio[];
+        ultimoResultado!.dados = (await Database.findAll(
+            config.collections.municipios,
+            {
+                resumo: ultimoResultado!._id,
+            },
+            {},
+        )) as ResumoMunicipio[];
         return ultimoResultado;
     }
     return [];
